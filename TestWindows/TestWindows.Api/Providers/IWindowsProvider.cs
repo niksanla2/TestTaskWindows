@@ -9,5 +9,7 @@ namespace TestWindows.Api.Providers
     public interface IWindowsProvider
     {
         IEnumerable<Window> GetWindowsByName(string name);
+        IEnumerable<Window> GetAllWindows();
+
     }
 }

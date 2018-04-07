@@ -16,14 +16,21 @@ namespace TestWindows.Api.Controllers
             _windowsProvider = windowsProvider;
         }
         [HttpGet()]
-        public IActionResult Get([FromQuery] string name )
+        public IActionResult Get([FromQuery] string name)
         {
-            var resultWindows = _windowsProvider.GetWindowsByName(name);
-            if (resultWindows == null || !resultWindows.Any())
+            if (string.IsNullOrEmpty(name))
             {
-                return NotFound();
+                return Ok(_windowsProvider.GetAllWindows());
             }
-            return Ok(resultWindows);
+            else
+            {
+                var resultWindows = _windowsProvider.GetWindowsByName(name);
+                if (resultWindows == null || !resultWindows.Any())
+                {
+                    return NotFound();
+                }
+                return Ok(resultWindows);
+            }
         }
     }
 }

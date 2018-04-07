@@ -12,14 +12,14 @@ namespace TestWindows.Api.Providers
 {
     public class WindowsProvider : IWindowsProvider
     {
-        IEnumerable<Window> IWindowsProvider.GetWindowsByName(string name)
+        public IEnumerable<Window> GetAllWindows()
         {
             var windows = new List<Window>();
             WinApi.EnumWindows((hWnd, lParam) =>
             {
                 var windowName = WinApi.GetWindowText(hWnd);
-                if (!string.Equals(windowName, name, StringComparison.OrdinalIgnoreCase) ||
-                    !WinApi.IsWindowVisible(hWnd))
+
+                if (string.IsNullOrEmpty(windowName) || !WinApi.IsWindowVisible(hWnd))
                 {
                     return true;
                 }
@@ -41,6 +41,11 @@ namespace TestWindows.Api.Providers
             }, IntPtr.Zero);
 
             return windows;
+        }
+
+        IEnumerable<Window> IWindowsProvider.GetWindowsByName(string name)
+        {
+            return GetAllWindows().Where(el => string.Equals(el.Name, name, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
