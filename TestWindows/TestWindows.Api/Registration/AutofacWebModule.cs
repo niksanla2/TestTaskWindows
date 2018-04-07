@@ -3,10 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TestWindows.Api.Providers;
 
 namespace TestWindows.Api.Registration
 {
     public class AutofacWebModule : Module
     {
+        protected override void Load(ContainerBuilder builder)
+        {
+            base.Load(builder);
+
+            builder
+                .RegisterType<WindowsProvider>()
+                .As<IWindowsProvider>();
+        }
     }
 }

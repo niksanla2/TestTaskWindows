@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Autofac.Extensions.DependencyInjection;
-
+using TestWindows.Api.Registration;
 
 namespace TestWindows.Api
 {
@@ -30,9 +30,7 @@ namespace TestWindows.Api
 
             var containerBuilder = new ContainerBuilder();
 
-            //containerBuilder.RegisterModule<BussinesAutofacModule>();
-            //containerBuilder.RegisterModule(new RepositoryAutofacModule(Configuration));
-
+            containerBuilder.RegisterModule<AutofacWebModule>();
 
             containerBuilder.Populate(services);
             var container = containerBuilder.Build();
